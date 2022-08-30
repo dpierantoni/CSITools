@@ -1,0 +1,69 @@
+<div class="flex-column">
+  <div class='flex-row' style='margin-top:1vh;'>
+    <mat-radio-group  [(ngModel)]="batchType">
+      <mat-radio-button 
+          style='padding: 2px'
+          value="desktop"
+          (click) = 'radialClick();'>Desktop
+      </mat-radio-button>
+      <mat-radio-button 
+          style='padding: 2px'
+          value="cloud"
+          (click) = 'radialClick();'>Cloud
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class='flex-row'>
+    <input type="file"
+                    id="browser"
+                    style='display:none'
+                    accept=".csv"
+                    (change)="fileChangeListener($event)">
+    
+    <button class='btn' mat-raised-button color="primary" 
+      onclick= "document.getElementById('browser').click()"
+        id='browser'>Import DE Design Matrix csv
+    </button>
+    <button *ngIf='batchMatrix.length > 0 || batchMatrixCloud.length > 0' class='btn' mat-raised-button color="primary"
+      (click) = "exportBatchMatrix();">Export Batch Matrix
+    </button>
+    <button  *ngIf='batchType === "desktop"' class='btn'mat-raised-button color="primary"
+      [disabled]="exportIsDisabled"
+      (click)="copyToClipBoard()">Copy Table to Clipboard
+    </button>
+  </div>
+</div>
+
+&nbsp;
+
+<div *ngIf='batchType === "desktop"'>
+  <table mat-table [dataSource]="batchMatrix" class="mat-elevation-z8 batch-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="attribute">
+      <th mat-header-cell *matHeaderCellDef> Attribute </th>
+      <td mat-cell *matCellDef="let element"> {{element.attribute}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="values">
+      <th mat-header-cell *matHeaderCellDef> Values </th>
+      <td mat-cell *matCellDef="let element"> {{element.values}} </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+  </table>
+</div>
+
+<div *ngIf='batchType === "cloud"'>
+  <table mat-table [dataSource]="batchMatrixCloud" class="mat-elevation-z8 batch-table">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef class='header-cell'> {{column}}</th>
+      <td mat-cell *matCellDef="let element" class='cell'> {{element[column]}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+  </table>
+</div>

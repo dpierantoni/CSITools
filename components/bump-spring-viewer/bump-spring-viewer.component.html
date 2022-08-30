@@ -1,0 +1,45 @@
+<div style='margin: 1vh;' class="flex-row">
+    <div>
+        <button mat-raised-button color="primary"
+            (click) = 'addButton();'>
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <div  *ngFor = 'let file of fileList; let i = index' style='margin-left:2vw; margin-right:2vw;'>
+        <div class="flex-row">
+            <input type="file"
+                style='display:none'
+                accept=".csv*"
+                (change) ="fileChangeListener($event,i);" #fileUpload>
+            <span>
+                <button mat-raised-button color="primary"
+                    (click) = "removeFile(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button class='button-text-class' mat-raised-button color="primary"
+                    (click) = "fileUpload.click()">Select File
+                </button>
+            </span>
+        </div>
+        <div class='button-text-class'>
+            <span>  File Loaded: {{fileList[i].fileName}}</span>
+        </div>
+        <div>
+            <span>X: {{file.hoverX}}</span>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <span  >Delta: {{file.delta}}</span>
+        </div>
+        <div>
+            Y: {{file.hoverY}}
+        </div>
+    </div>
+</div>
+<div>
+    <div style='margin: 2vh; padding: 10px; border: 2px solid black; border-radius: 10px; height: 60vh;'>
+        <plotly-plot [data]="graph.data" [layout]="graph.layout"
+            [useResizeHandler]="true" (hover) = "onPlotlyHover($event)" (unhover) = "onPlotlyUnhover($event)" [style]="{position: 'relative', width: '100%', height: '100%'}">
+        </plotly-plot>
+    </div>
+</div>

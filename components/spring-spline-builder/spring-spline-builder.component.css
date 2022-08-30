@@ -1,0 +1,35 @@
+.flex-container{
+    display: flex;
+    
+    flex-flow: column wrap;
+  }
+
+.flex-row {
+   display: flex; 
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   padding-top: 1vh;
+}
+
+.flex-row-fixed {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-column {
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-flow: column wrap;
+}
+
+table {
+  width: 100%;
+}
+
+.center-item{
+  margin-left: 2vw;
+  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

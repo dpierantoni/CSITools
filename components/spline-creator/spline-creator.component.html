@@ -1,0 +1,77 @@
+<div class="new-container">
+
+</div>
+
+<div class='flex-row' style='margin-top: 2vh;'>
+    <div>
+        <div class="paste-box"
+            (paste)="pasteData($event)">
+            {{pasteBoxString}}
+        </div>
+    </div>
+    <div style='margin-top: 0;' class='center-item'>
+        <input style='width: 150px; height: 40px; border:2px solid #3f51b5; border-radius: 5px;
+        font-size: 13px; text-align: center;'
+        matInput type="number"
+        placeholder=" Spring Setup Load"
+        (keyup) = "onOffsetLoad($event)">
+    </div>
+    <div class='center-item'>
+        <button mat-raised-button color="primary" 
+         (click)= "clearSpringSplineData()">Clear Spring Spline Data
+        </button>
+    </div>
+    
+</div>
+
+&nbsp;
+<div style='height: 60vh; width: 100%; padding: 1vw; border: 2px solid black; border-radius: 10px;'>
+    <plotly-plot [data]="springGraph.data" [layout]="springGraph.layout"
+        [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%', padding:'0'}">
+    </plotly-plot>
+</div>
+&nbsp;
+
+<div class='flex-row' style='margin-top:1vh;' *ngIf='pastedSpringDataPersist.length > 0'>
+    <mat-radio-group  [(ngModel)]="springSplineType">
+        <mat-radio-button 
+            style='padding: 2px'
+            value="single"
+            (click) = 'radialClick();'>Single Spline
+        </mat-radio-button>
+        <mat-radio-button 
+            style='padding: 2px'
+            value="cut"
+            (click) = 'radialClick();'>Cut Spline
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+
+<div *ngIf='pastedSpringDataPersist.length > 0' class='flex-row'>
+        <div *ngIf='springSplineType === "cut"' style='padding-left: 1vw;'>
+            <label>Spline Cut: </label>
+            <input style='text-align: center; padding-top: 4px; width: 100px; height: 30px; border:2px solid #3f51b5; border-radius: 5px;' 
+            matInput type="number"
+            [(ngModel)] = 'splineCut'
+            (keyup) = "onSplineCut($event);"
+            (click) = "onSplineCut($event);">
+        </div>
+        <div *ngIf='springSplineType === "single"  || springSplineType === "cut"' style='padding-left: 1vw;'>
+            <label>Spline End: </label>
+            <input style='text-align: center; padding-top: 4px; width: 100px; height: 30px; border:2px solid #3f51b5; border-radius: 5px;' 
+            matInput type="number"
+            [(ngModel)] = 'splineEnd'
+            (keyup) = "onSplineEnd($event);"
+            (click) = "onSplineEnd($event);">
+        </div>
+        <button *ngIf='springSplineType === "single"' style='margin-left: 1vw;' mat-raised-button color="primary" 
+            (click)= "copyFullDataset();">Copy Full Dataset
+        </button>
+        <button *ngIf='springSplineType === "cut" && splineCut !== 0' style='margin-left: 1vw;' mat-raised-button color="primary" 
+            (click)= "copyPigtail();">Copy Ride Rate Override
+        </button>
+        <button *ngIf='springSplineType === "cut" && splineCut !== 0' style='margin-left: 1vw;' mat-raised-button color="primary" 
+            (click)= "copySpline();">Copy Engaged Spring Spline
+        </button>
+    
+</div>

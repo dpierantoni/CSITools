@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Select Vehicle attributes file from VES containing parts needing X,Y,Z coordinates in Batch</h1>
+
+<div class="flex-column" *ngFor = 'let part of uniqueValueList, index as i'>{{part.channel}}
+  
+  <div *ngIf = 'part.channel === "CrossUnhookedPer"' class="flex-row">
+    <span>SwayBar Preload Value:</span>
+    <span>
+      <input style='margin-left: 1vw; text-align: center; padding-top: 4px; width: 100px; height: 30px; border:2px solid #3f51b5; border-radius: 5px;' 
+        matInput type="number"
+        [(ngModel)] = "swaybarPreload">
+    </span>
+    <span>
+      <button
+        class='button' [ngStyle]="{'background-color':part.isLoaded[1] === true ? 'green' : 'red' }"
+        (click) = "setPreloadValue(i);">Set Value
+      </button>
+    </span>
+  </div>
+  
+  <div *ngIf = 'part.channel === "NoseWeight"' class="flex-row">
+    <span>Total Vehicle Weight:</span>
+    <span>
+      <input style='margin-left: 1vw; text-align: center; padding-top: 4px; width: 100px; height: 30px; border:2px solid #3f51b5; border-radius: 5px;' 
+        matInput type="number"
+        [(ngModel)] = "totalWeight">
+    </span>
+    <span>
+      <button
+        class='button' [ngStyle]="{'background-color':part.isLoaded[1] === true ? 'green' : 'red' }"
+        (click) = "setTotalWeightValue(i);">Set Value
+      </button>
+    </span>
+  </div>
+
+  <div *ngIf = 'part.channel !== "CrossUnhookedPer" && part.channel !== "NoseWeight"' class="flex-row">
+    <button *ngFor = 'let value of part.values, index as j' 
+      class='button' [ngStyle]="{'background-color':part.isLoaded[j] === true ? 'green' : 'red' }" 
+      mat-raised-button
+      onclick= "document.getElementById('browser2').click();"
+      (click) = "onclick(i, j);">{{part.values[j]}}
+        <input type="file"
+            id="browser2"
+            style='display:none'
+            accept=".csv"
+            (change)="addCSVData($event)">
+    </button>
+  </div>
+  
+</div>
+
+<div class="flex-row-end">
+  <button mat-raised-button 
+    color="primary"
+    style="width: 5vw;"
+    [disabled]="submitEnabled"
+    (click) = "onSubmit();"
+    >SUBMIT</button>
+</div>

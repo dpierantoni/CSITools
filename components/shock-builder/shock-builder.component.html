@@ -1,0 +1,34 @@
+<div style='margin: 2vh;' class='flex-row'>
+    <div>
+        <input type="file"
+            id="browser"
+            style='display:none'
+            accept=".csv*"
+            (change)="fileChangeListener($event)">
+        <span>
+            <button mat-raised-button color="primary" 
+            onclick= "document.getElementById('browser').click()"
+                id='browser'>Select Shock .csv File
+            </button>
+        </span>
+        <div style='margin-top: 1vh;'>
+            <span>  File Loaded: {{loadedFileName}}</span>
+        </div>
+    </div>
+</div>
+<div>
+    <div style='margin: 2vh; height: 60vh; padding: 10px; border: 2px solid black; border-radius: 10px'>
+        <plotly-plot [data]="graph.data" [layout]="graph.layout"
+            [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
+        </plotly-plot>
+    </div>
+</div>
+
+<div style='margin: 2vh;' class='flex-row'>
+    <button
+        mat-raised-button color="primary"
+        *ngFor='let shockType of shockOptionsList; let i = index;'
+        (click) = 'copyShockData(i)'
+        class='btn'> Copy {{shockType}}
+    </button>
+</div>

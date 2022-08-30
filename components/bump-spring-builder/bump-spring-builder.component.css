@@ -1,0 +1,15 @@
+.flex-row {
+    display: flex; 
+    justify-content: flex-start;
+    padding-top: 1vh;
+    
+ }
+
+ .btn {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .black-background{
+    background-color: black;
+ }

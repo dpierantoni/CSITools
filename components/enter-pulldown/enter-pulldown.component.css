@@ -1,0 +1,48 @@
+.flex-container{
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+.flex-row {
+   display: flex; 
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   padding-top: 1vh;
+   
+}
+
+.fill-column {
+  display: flex; 
+  flex-basis: 0;
+  flex-direction:column;
+  margin: 5px;
+}
+
+.evenly-dist-row {
+  display: flex; 
+  flex-direction: row;
+  align-content: evenly-spaced;
+}
+
+.flex-row-fixed {
+  display: flex;
+  justify-content: right;
+}
+
+.flex-column {
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-flow: column wrap;
+}
+
+table {
+  width: 100%;
+}
+
+.center-item{
+  margin-left: 2vw;
+  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

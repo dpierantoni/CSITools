@@ -1,0 +1,241 @@
+<div style='margin: 1vw;'>
+  <div class='row'>
+      <div class='column'>
+       
+          <h4>DOE Factor Matrix Inputs</h4>
+          <div class='flex-row'>
+            
+              <button class='btn' mat-icon-button color="primary"
+                  (click) = "addFactor();">
+                  <mat-icon>add</mat-icon>
+              </button>
+           
+              <input type="file"
+                            id="browser"
+                            style='display:none'
+                            accept=".csv"
+                            (change)="fileChangeListener($event)">
+            
+                <button class='btn' mat-raised-button color="primary" 
+                  onclick= "document.getElementById('browser').click()"
+                    id='browser'>Import
+                </button>
+           
+              <button class='btn' mat-raised-button color="primary"
+                [disabled]="exportIsDisabled"
+                (click) = "exportFactorMatrix();">Export
+              </button>
+            
+          </div>
+          &nbsp;
+          <div style="overflow-y: auto; padding: 1vw;">
+            <div class="center-row" *ngFor = 'let factor of inputFactorMatrix, index as i' >
+
+                <mat-form-field  appearance="outline" style="width: 250px;" class="margins">
+                  <mat-label>Factor Name</mat-label>
+                  <mat-select [(ngModel)] = "factor.channel"  >
+                    <input matInput type="text" placeholder= 'Search' (keyup) = "onKey($event, i);">
+                    <mat-option *ngFor="let channel of factor.channelOptionsFiltered" (click) = "onChannelSelect(i);" [value]="channel">{{channel}}</mat-option> 
+                  </mat-select> 
+                </mat-form-field>
+              
+                <mat-form-field appearance="outline" class="margins">
+                  <mat-label>Low Value</mat-label>
+                  <input matInput type="text" [(ngModel)]="factor.low">
+                </mat-form-field>
+              
+                <mat-form-field appearance="outline" class="margins">
+                  <mat-label>High Value</mat-label>
+                  <input matInput type="text" [(ngModel)]="factor.high">
+                </mat-form-field>
+            
+                <button  mat-icon-button color="primary" class="btn-center"
+                    (click) = "deleteFactor(i);">
+                    <mat-icon style='font-weight: bold;'>close</mat-icon>
+                </button>
+            </div>
+          </div>
+
+        
+      
+      </div>
+   
+    <div class='column'>
+      <!-- <div class='row'> -->
+        <!-- <span class="half-screen-column"> -->
+          <h4>DOE Responces</h4>
+          <div class='row'>
+            <input type="file"
+                            id="browser"
+                            style='display:none'
+                            accept=".csv"
+                            (change)="fileChangeListener($event)">
+            <span>
+                <button class='btn' mat-raised-button color="primary" 
+                  onclick= "document.getElementById('browser').click()"
+                    id='browser'>Import
+                </button>
+            </span>
+            <span>
+              <button class='btn' mat-raised-button color="primary"
+                [disabled]="exportIsDisabled"
+                (click) = "exportFactorMatrix();">Export
+              </button>
+            </span>
+          </div>
+          &nbsp;
+          <div class='row' style="overflow-y: auto;">
+            <span class="example-container">
+                <h5>Output Channel List</h5>
+                <div
+                  cdkDropList
+                  #todoList="cdkDropList"
+                  [cdkDropListData]="simOutputList"
+                  [cdkDropListConnectedTo]="[doneList]"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of simOutputList" cdkDrag>{{item}}</div>
+                </div>
+            </span>
+            <span class="example-container">
+              <h5>DOE Analyze List</h5>
+              <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+              </div>
+            </span>
+          </div>
+        <!-- </span> -->
+      <!-- </div> -->
+    </div>
+
+    
+  </div>
+</div>
+
+
+
+<!-- <div class='flex-row'>
+  <span class="half-screen-column">
+        <p>DOE Factor Matrix Inputs</p>
+        <div class='flex-row'>
+          <span> 
+            <button mat-icon-button color="primary"
+                (click) = "addFactor();">
+                <mat-icon>add</mat-icon>
+            </button>
+          </span>
+            <input type="file"
+                          id="browser"
+                          style='display:none'
+                          accept=".csv"
+                          (change)="fileChangeListener($event)">
+          <span>
+              <button mat-raised-button color="primary" 
+                onclick= "document.getElementById('browser').click()"
+                  id='browser'>Import
+              </button>
+          </span>
+          <span>
+            <button mat-raised-button color="primary"
+              [disabled]="exportIsDisabled"
+              (click) = "exportFactorMatrix();">Export
+            </button>
+          </span>
+      </div>
+    
+  </span>
+
+  <span class="half-screen-column">
+        <p>DOE Responces</p>
+        <div class='flex-row'>
+          <input type="file"
+                          id="browser"
+                          style='display:none'
+                          accept=".csv"
+                          (change)="fileChangeListener($event)">
+          <span>
+              <button mat-raised-button color="primary" 
+                onclick= "document.getElementById('browser').click()"
+                  id='browser'>Import
+              </button>
+          </span>
+          <span>
+            <button mat-raised-button color="primary"
+              [disabled]="exportIsDisabled"
+              (click) = "exportFactorMatrix();">Export
+            </button>
+          </span>
+      </div>
+      <span class="example-container">
+        <h2>Output Channel List</h2>
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+        </div>
+      </span>
+    <span class="example-container">
+      <h2>DOE Analyze List</h2>
+      <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </span>
+
+
+      
+    
+  </span>
+</div>
+
+<div class = "flex-column">
+    <div class="flex-row" *ngFor = 'let factor of inputFactorMatrix, index as i'>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>Factor Name</mat-label>
+          <mat-select [(ngModel)] = "factor.channel">
+            <input matInput type="text" placeholder= 'Search' (keyup) = "onKey($event, i);">
+            <mat-option *ngFor="let channel of factor.channelOptionsFiltered" (click) = "onChannelSelect(i);" [value]="channel">{{channel}}</mat-option> 
+          </mat-select> 
+        </mat-form-field>
+      </span>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>Low Value</mat-label>
+          <input matInput type="text" [(ngModel)]="factor.low">
+        </mat-form-field>
+      </span>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>High Value</mat-label>
+          <input matInput type="text" [(ngModel)]="factor.high">
+        </mat-form-field>
+      </span>
+      <span>
+        <button  mat-icon-button color="primary"
+            (click) = "deleteFactor(i);">
+            <mat-icon>close</mat-icon>
+        </button>
+      </span>
+    </div>
+</div>
+
+c
+<div>
+  {{testString}}
+</div> -->

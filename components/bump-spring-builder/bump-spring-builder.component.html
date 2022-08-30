@@ -1,0 +1,38 @@
+<div style='margin: 2vh;' class='flex-row'>
+    <div>
+        <p>Minimum Load Value</p>
+        <div style='margin-top: 1vh; margin-bottom: 1vh;'>
+           <input style='text-align: center; width: 100px; height: 30px; border:2px solid #3f51b5; border-radius: 5px;' 
+            matInput type="number"
+            [(ngModel)] = "minLoadValue">
+        </div>
+        <input type="file"
+            id="browser"
+            style='display:none'
+            accept=".csv*"
+            (change)="fileChangeListener($event)">
+        <span>
+            <button style='margin-top: 1vh;' mat-raised-button color="primary" 
+            onclick= "document.getElementById('browser').click()"
+                id='browser'>Select Bump Spring .csv File
+            </button>
+            <div style='margin-top: 1vh;'>
+                <span>Loaded File: {{loadedFileName}}</span>
+            </div>
+        </span>
+    </div>
+</div>
+<div>
+    <div style='margin: 2vh; padding: 10px; border: 2px solid black; border-radius: 10px'>
+        <plotly-plot [data]="graph.data" [layout]="graph.layout"
+            [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}">
+        </plotly-plot>
+    </div>
+</div>
+<div  style='margin-left: 2vh;' class='flex-row' *ngIf = 'displayedData.length > 0'>
+    <button 
+        mat-raised-button color="primary" 
+        class='.btn'
+        (click) = 'copySplineDataToClip();'>Copy Bump Spring Data
+    </button>
+</div>

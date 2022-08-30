@@ -1,0 +1,78 @@
+
+<div>
+  <mat-toolbar color="primary">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+        (click) = 'setSpringTool();'>
+        <span>Spring Spline Builder</span>
+      </button>
+      <button mat-menu-item
+        (click) = 'setBumpSpringTool();'>
+        <span>Bump Spring Builder</span>
+      </button>
+      <button mat-menu-item
+        (click) = 'setBumpSpringViewerTool();'>
+        <span>Bump Spring Viewer</span>
+      </button>
+      <button mat-menu-item
+        (click) = 'setShockTool();'>
+        <span>Shock Builder</span>
+      </button>
+      <button mat-menu-item
+        (click) = 'setDOETool();'>
+        <span>DOE</span>
+      </button>
+      <!-- <button mat-menu-item disabled>
+        <span>Metrics</span>
+      </button> -->
+    </mat-menu>
+    <span style='margin-left: 1vw;'>CSI Tools</span>
+    <span class="toolbar-spacer"></span>
+    <span *ngIf="selectedApp === 'Bump Spring Builder'" style='right: 10vw; ;'>Bump Spring Builder v1.6.1</span>
+    <span *ngIf="selectedApp === 'Bump Spring Viewer'" style='right: 10vw; ;'>Bump Spring Viewer v1.1.1</span>
+    <span *ngIf="selectedApp === 'Spring Spline Builder'" style='right: 10vw; ;'>Spring Spline Builder v1.3.1</span>
+    <span *ngIf="selectedApp === 'Shock Builder'" style='right: 10vw; ;'>Shock Builder  v1.3.1</span>
+    <span *ngIf="selectedApp === 'DOE'" style='right: 10vw; ;'>DOE Tool</span>
+  </mat-toolbar>
+
+  <div>
+    <div *ngIf="selectedApp === 'Bump Spring Builder'">
+      <bump-spring-builder *ngIf="selectedApp ==='Bump Spring Builder'"></bump-spring-builder>
+    </div>
+
+    <div *ngIf="selectedApp === 'Bump Spring Viewer'">
+      <bump-spring-viewer *ngIf="selectedApp ==='Bump Spring Viewer'"></bump-spring-viewer>
+    </div>
+
+    <div *ngIf="selectedApp === 'Spring Spline Builder'">
+      <spring-spline-builder *ngIf="selectedApp ==='Spring Spline Builder'"></spring-spline-builder>
+    </div>
+
+    <div *ngIf="selectedApp === 'Shock Builder'">
+      <shock-builder></shock-builder>
+    </div>
+
+    <div *ngIf="selectedApp === 'DOE'">
+      <mat-form-field appearance="fill" >
+        <mat-label>Select an App Function</mat-label>
+        <mat-select [(value)]="selectedAppFunction">
+          <mat-option value="DOE Factor Matrix">Factor Matrix</mat-option>
+          <mat-option value="PM Batch Creation">PM Batch Creation</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="column">
+      <doefactor-matrix *ngIf="selectedAppFunction ==='DOE Factor Matrix' && selectedApp === 'DOE'"></doefactor-matrix>
+      <batch-creation *ngIf="selectedAppFunction ==='PM Batch Creation' && selectedApp === 'DOE'"></batch-creation>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
